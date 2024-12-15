@@ -11,3 +11,11 @@
 ### further improvements
 1) scraping each static and dyanmic site in the post - picking a good representative text and using this to rereank
 2) latency
+
+## build and run on local
+1) got clone
+2) open root dir in terminal and run
+```bash
+sudo docker compose up --build 
+```
+3) open localhost:8001
