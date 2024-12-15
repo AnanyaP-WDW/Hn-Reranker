@@ -1,0 +1,5 @@
+fastapi>=0.104.0
+uvicorn>=0.24.0
+pydantic>=2.4.2
+aiohttp>=3.8.6
+flashrank>=0.1.0 
