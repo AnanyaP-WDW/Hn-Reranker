@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /api-docs
+Disallow: /api-redoc

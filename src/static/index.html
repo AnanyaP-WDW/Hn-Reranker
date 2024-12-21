@@ -3,6 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Personalized HackerNews story ranking based on your interests and bio. Get relevant tech news filtered just for you.">
+    <meta name="keywords" content="hacker news, personalized news, tech news, AI ranking, custom news feed">
+    <meta name="author" content="Ananya Pathak">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph tags for social sharing -->
+    <meta property="og:title" content="HackerNews Bio Ranker">
+    <meta property="og:description" content="Get personalized HackerNews stories based on your interests">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hn.ananyapathak.xyz">
+    
+    <!-- Twitter Card tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="HackerNews Bio Ranker">
+    <meta name="twitter:description" content="Personalized HackerNews story ranking based on your interests">
     <script defer data-domain="hn.ananyapathak.xyz" src="https://plausible.ananyapathak.xyz/js/script.file-downloads.hash.outbound-links.tagged-events.js"></script>
     <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
     <title>HackerNews Bio Ranker</title>
@@ -53,17 +68,30 @@
     </style>
 </head>
 <body>
-    <div style="text-align: right; padding: 10px; font-size: 0.9em;"></div>
-        Built by <a href="https://ananyapathak.xyz" target="_blank" rel="noopener noreferrer">ananyapathak.xyz</a>
-    </div>
-    <h1>HackerNews Bio Ranker</h1>
-    <p>Enter your bio and interests to get personalized HackerNews stories:</p>
+    <header>
+        <h1>HackerNews Bio Ranker</h1>
+        <nav>
+            <a href="https://ananyapathak.xyz" target="_blank" rel="noopener noreferrer">Built by ananyapathak.xyz</a>
+        </nav>
+    </header>
     
-    <textarea id="bio" placeholder="Enter your bio and interests here..."></textarea>
-    <button onclick="submitBio()" id="submitBtn">Rank Stories</button>
-    <div id="loading">Loading results...</div>
+    <main>
+        <section class="bio-input">
+            <h2>Enter Your Interests</h2>
+            <p>Enter your bio and interests to get personalized HackerNews stories:</p>
+            <textarea id="bio" aria-label="Enter your bio and interests" placeholder="Enter your bio and interests here..."></textarea>
+            <button onclick="submitBio()" id="submitBtn">Rank Stories</button>
+        </section>
+        
+        <section class="results" aria-live="polite">
+            <div id="loading" role="status">Loading results...</div>
+            <div id="results"></div>
+        </section>
+    </main>
     
-    <div id="results" class="results"></div>
+    <footer>
+        <p>© 2024 HackerNews Bio Ranker. All rights reserved.</p>
+    </footer>
 
     <script>
         async function submitBio() {

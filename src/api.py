@@ -4,6 +4,8 @@ from typing import List, Optional
 import uvicorn
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from pathlib import Path
+from datetime import datetime
 
 from .hn import get_top_500_posts
 from .rerank import PostRanker
@@ -12,11 +14,12 @@ from .main import format_posts_for_reranking
 app = FastAPI(
     title="HackerNews Bio Ranker",
     description="API that ranks HackerNews stories based on user's bio and interests",
-    version="1.0.0"
+    version="1.0.0",
+    openapi_tags=[{
+        "name": "Ranking",
+        "description": "Operations for ranking HackerNews stories"
+    }]
 )
-
-app.mount("/static", StaticFiles(directory="src/static"), name="static")
-
 
 class UserBio(BaseModel):
     bio: str = Field(..., min_length=1, max_length=2000)
@@ -91,6 +94,20 @@ async def log_requests(request: Request, call_next):
     except Exception as e:
         print(f"Error processing request: {str(e)}")
         raise HTTPException(status_code=400, detail=f"Invalid request: {str(e)}")
+    
+# Get the directory where static files are stored
+static_dir = Path(__file__).parent / "static"
+# Mount the static directory last (as a catch-all)
+app.mount("/", StaticFiles(directory=str(static_dir), html=True), name="static")
+
+# Define routes first (before mounting static files)
+@app.get("/sitemap.xml")
+async def sitemap():
+    return FileResponse("app/static/sitemap.xml")
+
+@app.get("/robots.txt")
+async def robots():
+    return FileResponse("app/static/robots.txt")
 
 if __name__ == "__main__":
     uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True) 
